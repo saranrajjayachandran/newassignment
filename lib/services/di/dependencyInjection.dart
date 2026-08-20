@@ -7,8 +7,9 @@ import 'package:newassignment/services/apiService.dart';
 
 final sl = GetIt.instance;
 setUpServices() async {
-  sl.registerLazySingleton<ProductDataSource>(() => sl<ProductDataSourceImpl>());
-  sl.registerLazySingleton<ProductRepository>(() => sl<ProductRepositoryImpl>());
+  sl.registerLazySingleton<ProductDataSource>(() => ProductDataSourceImpl());
+  sl.registerLazySingleton<ProductRepository>(() => ProductRepositoryImpl());
+  sl.registerLazySingleton<ProductUseCase>(() => ProductUseCase());
   sl.registerSingleton<ApiService>(ApiService());
 
 }

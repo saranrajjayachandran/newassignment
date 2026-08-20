@@ -10,19 +10,17 @@ part 'product_state.dart';
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   List<ProductModel> lst_products = [];
   bool isResponseCame = false;
-  ProductUseCase useCase = ProductUseCase();
+  ProductUseCase useCase = sl<ProductUseCase>();
   ProductBloc() : super(ProductInitial()) {
-    on<ProductEvent>((event, emit) {
+    on<ProductEvent>((event, emit) async {
       // TODO: implement event handler
 
       if(event is FetchProductEvent) {
         try{
-          final result = useCase.getProductUseCase();
-          result.then((value) {
-            isResponseCame = true;
-            lst_products = value;
-            emit(ProductFetchSuccessState());
-          },);
+          final result = await useCase.getProductUseCase();
+          isResponseCame = true;
+          lst_products = result;
+          emit(ProductFetchSuccessState());
         }catch(e){
           emit(ProductFetchFailedState());
         }
